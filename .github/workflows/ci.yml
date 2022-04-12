@@ -1,0 +1,83 @@
+name: CI 🏗️
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['*.md']
+  pull_request:
+    branches: [main]
+    paths-ignore: ['*.md']
+
+jobs:
+  nvm:
+    name: Get Node Version 🏷️
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.nvm.outputs.version }}
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - id: nvm
+        name: Get Node Version 🏷️
+        run: echo "::set-output name=version::$(cat .nvmrc)"
+
+  typecheck:
+    name: Type Check 🚨
+    needs: nvm
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Setup Node 📏
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ needs.nvm.outputs.version }}
+          cache: yarn
+
+      - name: Install Dependencies 📦
+        run: yarn install
+
+      - name: Run Type Checker 🚨
+        run: yarn typecheck
+
+  lint:
+    name: Lint 🚦
+    needs: nvm
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Setup Node 📏
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ needs.nvm.outputs.version }}
+          cache: yarn
+
+      - name: Install Dependencies 📦
+        run: yarn install
+
+      - name: Run ESLint 🚦
+        run: yarn lint
+
+  format:
+    name: Format 🪞
+    needs: nvm
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Setup Node 📏
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ needs.nvm.outputs.version }}
+          cache: yarn
+
+      - name: Install Dependencies 📦
+        run: yarn install
+
+      - name: Run Prettier 🪞
+        run: yarn format

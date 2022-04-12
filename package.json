@@ -1,0 +1,60 @@
+{
+  "name": "localization",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/PoQuatre/ssr-localization.git",
+  "author": "PoQuatre <leflem.mateo2002@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "dev": "concurrently -n tsc,node -c blue,magenta \"yarn:watch-ts\" \"yarn:watch-node\"",
+    "watch-ts": "tsc --watch",
+    "watch-node": "nodemon -q dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --check \"**/*.{js,ts,json,md,hbs,yml}\"",
+    "lint": "eslint \"**/*.{js,ts}\"",
+    "commit": "git-cz",
+    "prepare": "husky install"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": ".commitizenrc.json"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --cache --fix",
+    "*.{js,ts,json,md,hbs,yml}": "prettier --write"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.5"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.23",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "commitizen": "^4.2.4",
+    "concurrently": "^7.1.0",
+    "cz-customizable": "^6.3.0",
+    "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-typescript": "^3.0.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.3"
+  }
+}
